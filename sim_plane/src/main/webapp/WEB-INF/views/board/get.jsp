@@ -1,10 +1,12 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
-<html>
-<head><title>게시글 상세</title></head>
-<body>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ include file="../includes/header.jsp" %>
+
 <h2>게시글 상세</h2>
 <p><b>번호:</b> ${board.boardid}</p>
 <p><b>제목:</b> ${board.title}</p>
+<p><b>작성자:</b> ${board.writer}</p>
 <p><b>내용:</b> ${board.content}</p>
 <p><b>작성일:</b> ${board.regDate}</p>
 <p><b>이미지:</b><br>
@@ -21,6 +23,6 @@
   <input type="hidden" name="boardid" value="${board.boardid}" />
   <input type="submit" value="삭제하기" />
 </form>
-<a href="list.do">목록으로</a>
-</body>
-</html>
+<a href="/board/list">목록으로</a>
+
+<%@ include file="../includes/footer.jsp" %>

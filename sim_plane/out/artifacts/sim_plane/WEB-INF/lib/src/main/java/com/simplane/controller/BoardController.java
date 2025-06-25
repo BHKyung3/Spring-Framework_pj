@@ -5,7 +5,8 @@ import com.simplane.domain.Criteria;
 import com.simplane.domain.PageDTO;
 import com.simplane.service.BoardService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.log4j.Log4j;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +17,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/board")
 @RequiredArgsConstructor
-@Slf4j
+@Log4j
 public class BoardController {
 
     private final BoardService service;
@@ -32,22 +33,29 @@ public class BoardController {
         int total = service.getTotal(cri);
 
         model.addAttribute("pageMaker", new PageDTO(cri, total));
+
+        log.info("list================");
     }
 
     //단 건 읽어오기
     @GetMapping({"/get", "/modify"})
-    public void get(@RequestParam Long boardid, Model model) {
+    public void get(@RequestParam Long boardid, Criteria cri, Model model) {
         log.info("get......modify..........");
 
-        log.info("boardid:" + boardid);
-
         model.addAttribute("board", service.get(boardid));
+        model.addAttribute("cri", cri);
     }
 
     // 데이터 수정
     @PostMapping("/modify")
     public String modify(BoardVO board, @ModelAttribute("cri") Criteria cri, RedirectAttributes rttr) {
         log.info("modify.....2");
+        log.info("service is null? " + (service == null));
+
+        log.info("boardid: " + board.getBoardid());
+        log.info("title: " + board.getTitle());
+        log.info("content: " + board.getContent());
+        log.info("imagePath: " + board.getImagePath());
 
         if(service.modify(board)) {
             rttr.addFlashAttribute("result", "수정 되었습니다.");
@@ -60,5 +68,29 @@ public class BoardController {
         log.info("modify.....3");
 
         return "redirect:/board/list";
+    }
+
+    @PostMapping("/register")
+    public String register(BoardVO boardVO, RedirectAttributes rttr) {
+        log.info("register.....");
+        service.register(boardVO);
+        rttr.addFlashAttribute("result", boardVO.getBoardid());
+        return "redirect:/board/list";
+    }
+
+    @PostMapping("/remove")
+    public String remove(@RequestParam("boardid") Long boardid, @ModelAttribute("cri") Criteria cri ,
+                         RedirectAttributes rttr) {
+        log.info("remove..." + boardid);
+//        log.info("remove...writer..." + writer);
+
+        if (service.remove(boardid)) {
+            rttr.addFlashAttribute("result", "삭제를 성공했습니다.");
+        }
+        return "redirect:/board/list";
+    }
+
+    @GetMapping("/register")
+    public void register(){
     }
 }

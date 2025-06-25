@@ -1,12 +1,13 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<html>
-<head><title>게시글 수정</title></head>
-<body>
+<%@ include file="../includes/header.jsp" %>
+
 <h2>게시글 수정</h2>
-<form action="/board/modify" method="post" enctype="multipart/form-data">
+<form action="/board/modify" method="post" enctype="multipart/form-data" class="board">
   <input type="hidden" name="boardid" value="${board.boardid}" />
   <p>제목: <input type="text" name="title" value="${board.title}" required /></p>
+  <p>작성자: <input type="text" name="writer" value="${board.writer}" readonly /></p>
   <p>내용: <textarea name="content" required>${board.content}</textarea></p>
   <p>현재 이미지:<br>
     <c:if test="${not empty board.imagePath}">
@@ -16,6 +17,6 @@
   <p>이미지 변경: <input type="file" name="uploadFile" /></p>
   <input type="submit" value="수정" />
 </form>
-<a href="list.do">목록으로</a>
-</body>
-</html>
+<a href="/board/list">목록으로</a>
+
+<%@ include file="../includes/footer.jsp" %>

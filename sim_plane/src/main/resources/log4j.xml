@@ -14,9 +14,6 @@
     <logger name="com.simplane.controller">
         <level value="info" />
     </logger>
-    <logger name="com.simplane.service">
-        <level value="info" />
-    </logger>
 
     <!-- 3rdparty Loggers -->
     <logger name="org.springframework.core">
@@ -37,8 +34,9 @@
 
     <!-- Root Logger -->
     <root>
-        <priority value="info" />
+        <priority value="warn" />
         <appender-ref ref="console" />
     </root>
 
 </log4j:configuration>
+

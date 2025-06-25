@@ -1,20 +1,21 @@
 package com.simplane.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Date;
 
-@Data
+@Getter
+@Setter
+@ToString
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class ReplyVO {
 
     private Long replyid;
     private Long testid;
+    private String replyer;
     private String reply;
-    private Date replydate;
+    private Date replyDate;
 }
+

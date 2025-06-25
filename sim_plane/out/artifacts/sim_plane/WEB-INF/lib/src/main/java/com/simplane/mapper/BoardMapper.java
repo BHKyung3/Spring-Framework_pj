@@ -21,4 +21,6 @@ public interface BoardMapper {
     public List<BoardVO> getListWithPaging(Criteria cri);
 
     public int getTotalCount(Criteria cri);
+
+    public void createSelectKey(BoardVO board); // 게시글 등록하면 게시글의 번호도 자동으로 같이 가져옴
 }

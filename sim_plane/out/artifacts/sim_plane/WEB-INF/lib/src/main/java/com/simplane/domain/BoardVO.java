@@ -4,12 +4,12 @@ import lombok.*;
 
 import java.util.Date;
 
-@Data
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @Setter
+@ToString
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class BoardVO {
 
     private Long boardid;
@@ -17,5 +17,7 @@ public class BoardVO {
     private String content;
     private Date regDate;
     private String imagePath;
+    private String writer;
 }
+
 
