@@ -1,7 +1,8 @@
-package com.simplane;
+package com.simplane.mapper;
 
 import com.simplane.domain.BoardVO;
-import com.simplane.mapper.BoardMapper;
+import com.simplane.domain.ReplyVO;
+import junit.framework.TestCase;
 import lombok.extern.log4j.Log4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,21 +13,24 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
 @Log4j
-public class BoardMapperTests {
+public class ReplyMapperTest extends TestCase {
 
     @Autowired
-    private BoardMapper mapper;
+    private ReplyMapper mapper;
 
+    //댓글 조회 테스트
+    @Test
+    public void testRead() {
+        log.info(mapper.read(1L));
+    }
+
+    //댓글 수정 테스트
     @Test
     public void testUpdate() {
-        BoardVO vo = BoardVO.builder()
-                .boardid(1L)
-                .title("싸다구 심리테스트")
-                .content("한 번에 테스트 성공 기원")
-                .imagePath("images/sample1.jpg")
+        ReplyVO vo = ReplyVO.builder()
+                .reply("다음 생에는 돌멩이로 태어난다 꼭")
+                .replyid(1L)
                 .build();
-
-        int result = mapper.update(vo);
-        log.info("업데이트 결과: " + result);
+        log.info(mapper.update(vo));
     }
 }

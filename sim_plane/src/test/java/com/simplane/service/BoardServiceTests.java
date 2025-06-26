@@ -1,7 +1,6 @@
-package com.simplane;
+package com.simplane.service;
 
 import com.simplane.domain.BoardVO;
-import com.simplane.service.BoardService;
 import lombok.extern.log4j.Log4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
