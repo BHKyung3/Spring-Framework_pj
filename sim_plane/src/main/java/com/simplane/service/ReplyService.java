@@ -13,5 +13,5 @@ public interface ReplyService {
     public ReplyPageDTO getListPage(Criteria cri, Long boardid);
 
     //댓글 수정
-    public Long modify(ReplyVO vo);
+    public Long modify(ReplyVO reply);
 }
