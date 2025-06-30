@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
+<!--프레임워크 태그라이브러리 선언 "sec"-->
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -33,6 +35,7 @@
 
     <title>Document</title>
     <style>
+
         body{margin: 0; padding: 0; font-family: "맑은 고딕";}
         ul,ol,li {list-style: none; margin: 0; padding: 0;}
 
@@ -85,30 +88,39 @@
 <body>
 <header>
 
-    <div id="logo"><img src="img01/로고.JPG"></div>
+    <div id="logo"></div>
 
     <div id="login">
 
         <ul>
+            <!--로그인 하면 로그인, 회원가입 버튼 사라지고 로그아웃 버튼이 나오게-->
+            <sec:authorize access="!isAuthenticated()">
+                <li><a href="<c:url value='/login' />">로그인</a></li>
+                <li>|</li>
+                <li><a href="<c:url value='/signup' />">회원가입</a></li>
+            </sec:authorize>
 
+            <sec:authorize access="isAuthenticated()">
+                <li>
+                    <a href="#" onclick="document.getElementById('logoutForm').submit(); return false;">로그아웃</a>
 
-            <li><a href="#">로그인</a></li>
-
-            <li>|</li>
-
-
-            <li><a href="#">회원가입</a></li>
+                    <form id="logoutForm" action="<c:url value='/logout' />" method="post" style="display:none;">
+                    </form>
+                </li>
+            </sec:authorize>
         </ul>
     </div>
 
     <nav>
         <ul>
-            <li><a href="#">심리테스트</a></li>
-            <li><a href="#">운세</a></li>
+            <li><a href="/test/list">심리테스트</a></li>
+            <li><a href="/fortune/list">운세</a></li>
             <li><a href="#">궁합</a></li>
             <li><a href="#">포춘쿠키</a></li>
             <li><a href="/board/list">문의게시판</a></li>
         </ul>
     </nav>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
 </header>

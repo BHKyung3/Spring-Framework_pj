@@ -8,15 +8,17 @@ import java.util.List;
 
 public interface ReplyMapper {
 
-    //댓글 조회
-    public ReplyVO read(Long replyid);
+    public int create(ReplyVO vo); //댓글 등록
 
-    //댓글 수정
-    public Long update(ReplyVO reply);
+    public ReplyVO read(Long replyid); //댓글 조회
 
-    //댓글 페이징 처리
-    public List<ReplyVO> getListWithPaging(
-            @Param("cri") Criteria cri,
-            @Param("boardid") Long boardid
+    public int update(ReplyVO reply); //댓글 수정
+
+    public List<ReplyVO> getListWithPaging( //댓글 페이징 처리
+                                            @Param("cri") Criteria cri,
+                                            @Param("boardid") Long boardid
     );
+
+    public int delete(Long replyid); // 댓글 삭제
+
 }

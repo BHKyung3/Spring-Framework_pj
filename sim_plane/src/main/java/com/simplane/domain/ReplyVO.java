@@ -18,4 +18,3 @@ public class ReplyVO {
     private String reply;
     private Date replyDate;
 }
-

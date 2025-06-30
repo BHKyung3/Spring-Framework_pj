@@ -33,10 +33,8 @@ public class BoardController {
         int total = service.getTotal(cri);
 
         model.addAttribute("pageMaker", new PageDTO(cri, total));
-
-        log.info("list================");
     }
-
+    
     //단 건 읽어오기
     @GetMapping({"/get", "/modify"})
     public void get(@RequestParam Long boardid, Criteria cri, Model model) {
@@ -55,7 +53,7 @@ public class BoardController {
         log.info("boardid: " + board.getBoardid());
         log.info("title: " + board.getTitle());
         log.info("content: " + board.getContent());
-        log.info("imagePath: " + board.getImagePath());
+
 
         if(service.modify(board)) {
             rttr.addFlashAttribute("result", "수정 되었습니다.");
@@ -93,4 +91,5 @@ public class BoardController {
     @GetMapping("/register")
     public void register(){
     }
+
 }

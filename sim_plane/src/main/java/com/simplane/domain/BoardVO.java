@@ -19,5 +19,3 @@ public class BoardVO {
     private String imagePath;
     private String writer;
 }
-
-

@@ -8,10 +8,10 @@ import lombok.ToString;
 @Getter
 @ToString
 public class Criteria {
-
+    
     private int pageNum; //현재 페이지
     private int amount; //총 페이지 개수
-
+    
     private String type; //검색 조건(제목, 내용, 작성자)
     private String keyword; //검색 값
 
