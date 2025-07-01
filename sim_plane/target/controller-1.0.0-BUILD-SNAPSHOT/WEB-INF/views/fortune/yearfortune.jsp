@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../includes/header.jsp" %>
+<link rel="stylesheet" href="<c:url value='/resources/dist/css/main.css' />" />
 
 
 <h2>띠별 운세 보기 (2025)</h2>

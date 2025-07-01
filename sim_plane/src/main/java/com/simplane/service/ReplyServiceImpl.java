@@ -2,12 +2,11 @@ package com.simplane.service;
 
 import com.simplane.domain.Criteria;
 import com.simplane.domain.ReplyVO;
-import com.simplane.dto.ReplyPageDTO;
-import com.simplane.mapper.BoardMapper;
+import com.simplane.domain.ReplyPageDTO;
 import com.simplane.mapper.ReplyMapper;
+import com.simplane.mapper.TestMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,11 +17,12 @@ import java.util.List;
 public class ReplyServiceImpl implements ReplyService {
 
     private final ReplyMapper mapper;
-    private final BoardMapper boardMapper;
+    private final TestMapper testMapper;
 
 
     @Override
     public int register(ReplyVO vo) {
+
         return mapper.create(vo);
     }
 
@@ -32,9 +32,8 @@ public class ReplyServiceImpl implements ReplyService {
     }
 
     @Override
-    public ReplyPageDTO getListPage(Criteria cri, Long boardid) {
-        List<ReplyVO> list = mapper.getListWithPaging(cri, boardid);
-        return new ReplyPageDTO(list);
+    public ReplyPageDTO getListPage(Criteria cri, Long testid) {
+        return new ReplyPageDTO(mapper.getCountByTestid(testid), mapper.getListWithPaging(cri, testid));
     }
 
     @Override
@@ -48,7 +47,7 @@ public class ReplyServiceImpl implements ReplyService {
     }
 
     @Override
-    public List<ReplyVO> getList(Criteria cri, Long boardid) {
-        return mapper.getListWithPaging(cri, boardid);
+    public List<ReplyVO> getList(Criteria cri, Long testid) {
+        return mapper.getListWithPaging(cri, testid);
     }
 }

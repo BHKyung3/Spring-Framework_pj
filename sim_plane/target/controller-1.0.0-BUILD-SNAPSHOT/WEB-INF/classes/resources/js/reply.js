@@ -3,15 +3,15 @@ console.log("Reply Module............");
 //즉시 실행 함수
 let replyService = (function(){
 
-    function add(reply, callback){  //비동기 통신
+    function add(replyData, callback, error){  //비동기 통신
         console.log("reply.....................");
 
         $.ajax({  //앞에도 따옴표가 붙으면 json 객체, 없으면 js객체
             type : 'post',
             url : '/replies/new',
-            data : JSON.stringify(reply),  //reply(js객체)를 json으로 변환
-            contentType : "application/json; charset=utf-8", 
-            success : function(result, status, xhr) {
+            data : JSON.stringify(replyData),  //reply(js객체)를 json으로 변환
+            contentType : "application/json; charset=utf-8",
+            success : function(result, replyData, status, xhr) {
                 if(callback) {
                     callback(result);
                 }
@@ -22,6 +22,7 @@ let replyService = (function(){
                 }
             }
         })
+        console.log("reply.....................");
     } //end add
 
     function getList(param, callback, error) {
@@ -29,7 +30,7 @@ let replyService = (function(){
         let page = param.page || 1;  //page값 없으면 1값 입력
 
         $.ajax({
-            type: 'get', 
+            type: 'get',
             url: '/replies/pages/'+testid+"/"+page,
             success : function(result, status, xhr) {
                 if(callback) {
@@ -115,7 +116,7 @@ let replyService = (function(){
             return [ (hh>9 ? '' : '0')+ hh, ":",
                 (mi>9 ? '':'0')+ mi, ":",
                 (ss>9 ? '':'0')+ ss
-                ].join('');
+            ].join('');
         }else{
             let yy = dateObj.getFullYear();
             let mm = dateObj.getMonth()+1;
@@ -127,11 +128,11 @@ let replyService = (function(){
         }
     }//end displayTime
 
-    
+
 
     return {
         add : add,
-        getList : getList, 
+        getList : getList,
         remove : remove,
         get : get,
         update : update,

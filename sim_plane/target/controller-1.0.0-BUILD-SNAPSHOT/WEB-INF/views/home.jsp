@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page session="false" %>
 <%@ include file="./includes/header.jsp" %>
+<link rel="stylesheet" href="<c:url value='/resources/dist/css/main.css' />" />
 
 <div id="slider"><img src="img01/배너.JPG"></div>
 <h4>~BEST 굿즈를 한번에 만나보세요~</h4>

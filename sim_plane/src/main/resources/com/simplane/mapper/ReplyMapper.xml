@@ -26,9 +26,12 @@
     <select id="getListWithPaging" resultType="com.simplane.domain.ReplyVO">
         SELECT replyid, testid, replyer, reply, replyDate
         FROM sim_reply
-        WHERE boardid = #{boardid}
+        WHERE testid = #{testid}
         ORDER BY replyid DESC
         LIMIT #{cri.amount} OFFSET #{cri.offset}
     </select>
 
+    <select id="getCountByTestid" resultType="int">
+        select count(replyid) from sim_reply where testid = #{testid}
+    </select>
 </mapper>

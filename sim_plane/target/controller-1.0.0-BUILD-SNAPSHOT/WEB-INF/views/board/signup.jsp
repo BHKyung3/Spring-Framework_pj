@@ -4,6 +4,7 @@
 <%
     request.setAttribute("tab", "performance");
 %>
+<link rel="stylesheet" href="<c:url value='/resources/dist/css/main.css' />" />
 
 <%@ include file="../includes/header.jsp" %>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -21,7 +22,7 @@
                     <div style="display: flex; gap: 10px;">
                         <input type="text" id="userid" name="userid"
                                class="krds-input" placeholder="아이디를 입력하세요"
-                               required style="flex: 1;" />
+                               required style="flex: 1;" oninput="resetIdChecked()" />
 
                         <button type="button" class="krds-btn secondary"
                                 onclick="checkUserid()">
@@ -103,6 +104,14 @@
         }
         return true;
     }
+
+    function resetIdChecked() {
+        document.getElementById("idChecked").value = "false";
+    }
+
+    // 오늘 날짜를 yyyy-mm-dd 형식으로 구함
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById("birthdate").setAttribute("max", today);
 </script>
 
 <%@ include file="../includes/footer.jsp" %>

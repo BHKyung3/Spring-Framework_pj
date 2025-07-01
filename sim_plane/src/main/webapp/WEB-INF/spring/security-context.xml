@@ -19,7 +19,7 @@
 	</beans:bean>
 
 	<beans:bean id="bcryptPasswordEncoder"
-				class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"></beans:bean>
+		  class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"></beans:bean>
 
 
 	<!-- 모든 요청 인증 필요 -->
@@ -38,6 +38,7 @@
 		<intercept-url pattern="/board/list" access="permitAll()"/><!-- 게시판 -->
 		<intercept-url pattern="/checkUsername" access="permitAll()" /><!-- 중복확인체크 -->
 		<intercept-url pattern="/test/**" access="permitAll()" />
+		<intercept-url pattern="/fortune/**" access="permitAll()" />
 
 
 		<!-- 그 외는 로그인한 사용자만 -->

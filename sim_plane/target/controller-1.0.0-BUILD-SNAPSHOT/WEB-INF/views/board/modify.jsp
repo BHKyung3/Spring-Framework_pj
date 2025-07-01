@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ include file="../includes/header.jsp" %>
+<link rel="stylesheet" href="<c:url value='/resources/dist/css/main.css' />" />
 
 <div class="container">
   <h2>게시글 수정</h2>
