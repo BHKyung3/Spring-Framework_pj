@@ -2,7 +2,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ include file="../includes/header.jsp" %>
-<link rel="stylesheet" href="<c:url value='/resources/dist/css/main.css' />" />
 
 <div class="container">
     <h2>문의하기</h2>
@@ -18,7 +17,7 @@
             <tr>
                 <th>작성자</th>
                 <td>
-                    <input type="text" name="writer" style="width: 100%;">
+                    <input name="writer" value='<sec:authentication property="principal.username"/>' readonly="readonly">
                 </td>
             </tr>
             <tr>

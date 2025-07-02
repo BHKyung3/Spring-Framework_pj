@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ include file="../includes/header.jsp" %>
-<link rel="stylesheet" href="<c:url value='/resources/dist/css/main.css' />" />
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 
 <input type="hidden" id="testid" value="${testid}" />
 <c:choose>
@@ -51,171 +51,134 @@
 
 <!-- ✅ JS -->
 <script type="text/javascript">
-    $(document).ready(function(){
-
-
+    $(document).ready(function () {
         let testidValue = $("#testid").val();
-
-        console.log("문서 로딩됨");
-        console.log("testidValue:", testidValue);
-
-        let pageNum = 1;
+        let loggedInUser = $("#replyer").val();
         let replyUL = $("#comment-list");
         let replyPageFooter = $(".panel-footer");
-        let loggedInUser = $("#replyer").val(); // 로그인 사용자 ID 가져오기
+        let pageNum = 1;
 
+        // ✅ 페이지 로드 시 댓글 목록
         showList(1);
 
-        function showList(page){
-            console.log("showList 실행됨");
+        // ✅ 댓글 목록 함수
+        function showList(page) {
+            pageNum = page;
 
-            replyService.getList(
-                {testid: testidValue, page: page || 1},
-                function(replyCnt, list){
-                    console.log("댓글 목록 도착:", list);
-                    if(page == -1){
-                        pageNum = Math.ceil(replyCnt / 10.0);
-                        showList(pageNum);
-                        return;
-                    }
+            replyService.getList({ testid: testidValue, page: page }, function (replyCnt, list) {
+                console.log("✅ 댓글 수:", replyCnt);
+                console.log("✅ 댓글 목록:", list);
 
-                    let str = "";
-                    if(!list || list.length === 0){
-                        replyUL.html("<p>댓글이 없습니다.</p>");
-                        showReplyPage(replyCnt);
-                        return;
-                    }
+                let str = "";
 
-                    for(let i = 0; i < list.length; i++){
-                        // *** 핵심 수정: 'reply' 변수를 여기서 정의합니다! ***
-                        let reply = list[i]; // <--- 이 줄을 추가해야 합니다.
+                for (let i = 0; i < list.length; i++) {
+                    let reply = list[i];
+                    console.log("💬 reply.replyer:", reply.replyer);
+                    console.log("💬 loggedInUser:", loggedInUser);
+                    console.log("🔍 reply 객체:", reply);
 
-                        let loginUser = $("#replyer").val();
-                        // isOwner 판단 로직도 이제 reply가 정의되었으므로 정상 작동합니다.
-                        let isOwner = (loginUser && reply.replyer === loginUser); // 로그인하지 않은 경우 (loginUser가 비어있을 때) isOwner는 false가 되도록 합니다.
+                    let isOwner = (loggedInUser && reply.replyer.trim() === loggedInUser.trim());
 
-                        str += `
-                    <div class="reply-box" data-replyid="${reply.replyid}">
-                        <p><strong>${reply.replyer}</strong> <small>${replyService.displayTime(reply.replyDate)}</small></p>
-                        <p class="reply-text">${reply.reply}</p>
-                        ${isOwner ? '<button class="edit-btn">수정</button><button class="delete-btn">삭제</button>' : ''}
-                    </div>
-                `;
-                    }
-
-                    replyUL.html(str);
-                    showReplyPage(replyCnt);
+                    // ✅ 모든 템플릿을 한 줄로! 문자열 연결 방식으로 처리
+                    str += '<div class="reply-box" data-replyid="' + reply.replyid + '">' +
+                        '<p><strong>' + reply.replyer + '</strong> <small>' + replyService.displayTime(reply.replyDate) + '</small></p>' +
+                        '<p class="reply-text">' + reply.reply + '</p>' +
+                        (isOwner ? '<button class="edit-btn">수정</button><button class="delete-btn">삭제</button>' : '') +
+                        '</div>';
                 }
-            );
+
+                console.log("🚀 최종 생성된 HTML:", str);
+                replyUL.html(str);
+                showReplyPage(replyCnt);
+            });
         }
 
-        // 댓글 등록 → 화면에 바로 추가
-        $("#comment-form").on("submit", function(e){
-            e.preventDefault();
-            let content = $("#comment-content").val();
-            if(!content) {
-                alert("댓글을 입력하세요.");
-                return;
-            }
-            // 댓글 등록 전 로그인 여부 확인
-            let replyer = $("#replyer").val();
-            if (!replyer) {
-                alert("로그인 후 댓글을 작성할 수 있습니다.");
-                return;
-            }
 
-            let reply = { // 이 'reply' 객체를 replyService.add 함수에 전달
+
+
+        // ✅ 댓글 등록
+        $("#comment-form").on("submit", function (e) {
+            e.preventDefault();
+
+            let content = $("#comment-content").val().trim();
+            if (!content) return alert("댓글을 입력하세요.");
+            if (!loggedInUser) return alert("로그인 후 댓글 작성이 가능합니다.");
+
+            let reply = {
                 reply: content,
-                replyer: loggedInUser, // 로그인 사용자 ID 사용
+                replyer: loggedInUser,
                 testid: testidValue
             };
 
-            replyService.add(reply, function(result, sentReplyData){
+            replyService.add(reply, function (result, sentReplyData) {
                 alert("댓글 등록 완료");
                 $("#comment-content").val("");
-
-                // 등록된 댓글에도 수정/삭제 버튼 권한 로직 적용
-                let isOwnerForNew = (loggedInUser && sentReplyData.replyer === loggedInUser);
-                let newComment = `
-                    <div class="reply-box" data-replyid="${result}">
-                        <p><strong>${sentReplyData.replyer}</strong> <small>방금 전</small></p>
-                        <p class="reply-text">${sentReplyData.reply}</p>
-                        ${isOwnerForNew ? '<button class="edit-btn">수정</button><button class="delete-btn">삭제</button>' : ''}
-                    </div>
-                `;
-                $("#comment-list").prepend(newComment);
+                showList(-1); // 마지막 페이지로 이동
             });
         });
 
-        // 댓글 수정
-        $("#comment-list").on("click", ".edit-btn", function(){
+        // ✅ 댓글 수정
+        $("#comment-list").on("click", ".edit-btn", function () {
             let box = $(this).closest(".reply-box");
-            let replyText = box.find(".reply-text").text();
-
-            box.find(".reply-text").replaceWith(`<textarea class="edit-area">${replyText}</textarea>`);
+            let text = box.find(".reply-text").text();
+            box.find(".reply-text").replaceWith(`<textarea class="edit-area">${text}</textarea>`);
             $(this).replaceWith(`<button class="save-btn">저장</button>`);
         });
 
-        $("#comment-list").on("click", ".save-btn", function(){
+        $("#comment-list").on("click", ".save-btn", function () {
             let box = $(this).closest(".reply-box");
-            let newReply = box.find(".edit-area").val();
             let replyid = box.data("replyid");
+            let newReply = box.find(".edit-area").val();
 
-            replyService.update({ replyid: replyid, reply: newReply }, function(result){
+            replyService.update({ replyid: replyid, reply: newReply }, function () {
                 alert("수정 완료");
-
                 box.find(".edit-area").replaceWith(`<p class="reply-text">${newReply}</p>`);
                 box.find(".save-btn").replaceWith(`<button class="edit-btn">수정</button>`);
             });
         });
 
-        // 댓글 삭제
-        $("#comment-list").on("click", ".delete-btn", function(){
-            if(!confirm("정말 삭제하시겠습니까?")) return;
+        // ✅ 댓글 삭제
+        $("#comment-list").on("click", ".delete-btn", function () {
+            if (!confirm("정말 삭제하시겠습니까?")) return;
 
             let box = $(this).closest(".reply-box");
             let replyid = box.data("replyid");
 
-            replyService.remove(replyid, function(result){
+            replyService.remove(replyid, function () {
                 alert("삭제 완료");
-                box.remove();
+                showList(pageNum);
             });
         });
 
-        // 페이징 처리
-        function showReplyPage(replyCnt){
+        // ✅ 페이징 처리
+        function showReplyPage(replyCnt) {
             let endNum = Math.ceil(pageNum / 10.0) * 10;
             let startNum = endNum - 9;
             let prev = startNum !== 1;
             let next = endNum * 10 < replyCnt;
 
-            let str = "<ul class='pagination pull-right'>";
-            if(prev){
-                str += `<li class='page-item'><a class='page-link' href='${startNum-1}'>Previous</a></li>`;
-            }
-
-            for(let i = startNum; i <= endNum; i++){
+            let str = "<ul class='pagination'>";
+            if (prev) str += `<li class='page-item'><a class='page-link' href='${startNum - 1}'>Previous</a></li>`;
+            for (let i = startNum; i <= endNum; i++) {
                 let active = pageNum == i ? "active" : "";
                 str += `<li class='page-item ${active}'><a class='page-link' href='${i}'>${i}</a></li>`;
             }
-
-            if(next){
-                str += `<li class='page-item'><a class='page-link' href='${endNum+1}'>Next</a></li>`;
-            }
-
+            if (next) str += `<li class='page-item'><a class='page-link' href='${endNum + 1}'>Next</a></li>`;
             str += "</ul>";
+
             replyPageFooter.html(str);
         }
 
-        replyPageFooter.on("click", "li a", function(e){
+        // ✅ 페이징 클릭 이벤트
+        replyPageFooter.on("click", "li a", function (e) {
             e.preventDefault();
-            pageNum = $(this).attr("href");
-            showList(pageNum);
+            let targetPage = $(this).attr("href");
+            showList(targetPage);
         });
     });
 </script>
 
-<!-- ✅ 외부 JS (replyService 정의되어 있어야 함) -->
+    <!-- ✅ 외부 JS (replyService 정의되어 있어야 함) -->
 <script src="<c:url value='/resources/js/test.js'/>"></script>
 <script src="<c:url value='/resources/js/reply.js'/>"></script>
 
