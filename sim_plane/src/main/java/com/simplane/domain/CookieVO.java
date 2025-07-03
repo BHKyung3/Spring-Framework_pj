@@ -12,4 +12,5 @@ public class CookieVO {
 
     private Long cookieId;
     private String content;
+
 }

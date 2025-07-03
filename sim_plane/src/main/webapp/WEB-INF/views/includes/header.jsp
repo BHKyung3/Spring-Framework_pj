@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
-<!--프레임워크 태그라이브러리 선언 "sec"-->
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -54,8 +54,7 @@
         nav ul li a{text-decoration: none; color: #333;}
         nav ul li a:hover{color: green;}
 
-        /* home.jsp의 CSS 부분은 header.jsp가 아닌 home.jsp에 직접 두는 것이 더 좋습니다.
-           혹시 header.jsp에 있다면 그대로 두세요. (예: #slider, section, article 등) */
+        /* home.jsp의 CSS 부분은 header.jsp가 아닌 home.jsp에 직접 두는 것이 더 좋습니다. */
 
         /* !!! 모달 틀 (어두운 배경)에 대한 스타일 (header.jsp에 통합) !!! */
         .popup-overlay {
@@ -66,6 +65,7 @@
             width: 100%;
             height: 100%;
             background-color: rgba(0, 0, 0, 0.7); /* 검은색으로, 70% 투명하게 만들어요. */
+            /* 스크린샷처럼 90%로 원한다면 0.9로 바꾸세요 */
             display: flex; /* 자식 요소들(팝업 내용)을 유연하게 배치하기 위해 사용해요. */
             justify-content: center; /* 가로 방향으로 가운데 정렬 */
             align-items: center; /* 세로 방향으로 가운데 정렬 */
@@ -124,7 +124,7 @@
     <script>
         const fortuneCookieModalWrapper = document.getElementById('fortuneCookieModalWrapper');
 
-        // 부모 창(home.jsp를 포함하는 header.jsp)에서 모달을 닫는 함수를 전역으로 정의해요.
+        // 부모 창(header.jsp가 포함된 home.jsp)에서 모달을 닫는 함수를 전역으로 정의해요.
         // cookie.jsp의 스크립트에서 window.parent.closeFortuneCookieModal()로 호출할 거예요.
         function closeFortuneCookieModal() {
             fortuneCookieModalWrapper.classList.add('hidden'); // 모달 틀 숨기기
@@ -147,6 +147,8 @@
                 // '/cookie/modalContent' 주소로 cookie.jsp의 HTML 내용을 요청해요.
                 const response = await fetch('/cookie/modalContent');
                 if (!response.ok) {
+                    const errorResponseText = await response.text(); // 오류 응답 텍스트 확인
+                    console.error('모달 내용을 불러오는데 실패했습니다. 서버 응답:', response.status, errorResponseText);
                     throw new Error('모달 내용을 불러오는데 실패했습니다.');
                 }
                 const modalHtml = await response.text(); // HTML 내용을 텍스트로 받아와요.
@@ -155,8 +157,13 @@
                 fortuneCookieModalWrapper.innerHTML = modalHtml;
 
                 // 모달 어두운 배경 클릭 시 닫기
+                // 이 이벤트 리스너는 모달이 열릴 때마다 다시 등록되므로,
+                // 이전 onclick을 덮어쓰거나 addEventListener/removeEventListener 쌍으로 관리해야 안전해요.
+                // 현재는 onclick으로 덮어쓰는 방식을 사용해요.
                 fortuneCookieModalWrapper.onclick = function(event) {
-                    if (event.target === fortuneCookieModalWrapper) { // 클릭된 요소가 모달 틀 자체일 때만 닫기
+                    // 클릭된 요소가 모달 콘텐츠 영역이 아닌 경우에만 닫기
+                    // 즉, 어두운 배경을 클릭했을 때만 닫히게 합니다.
+                    if (event.target === fortuneCookieModalWrapper) {
                         closeFortuneCookieModal();
                     }
                 };

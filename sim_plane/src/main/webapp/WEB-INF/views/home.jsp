@@ -32,7 +32,7 @@
 </style>
 
 
-<div id="slider"><img src="img01/배너.JPG"></div>
+<div id="slider"><img src="#"></div>
 <h4>~BEST 굿즈를 한번에 만나보세요~</h4>
 
 <section>
