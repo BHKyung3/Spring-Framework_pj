@@ -10,7 +10,7 @@ if (modalCookieImage) {
         console.log("포춘쿠키 그림 클릭됨! (모달 내용물 내부)"); // 로그 추가
         modalClickCount++;
 
-        if (modalClickCount === 2) {
+        if (modalClickCount === 1) {
             console.log("두 번째 클릭! 명언 요청 시작... (모달 내용물 내부)"); // 로그 추가
             getFortuneMessageForModal();
         }
@@ -22,8 +22,8 @@ if (modalCloseButton) {
     modalCloseButton.addEventListener('click', function() {
         console.log("닫기 버튼 클릭됨! (모달 내용물 내부)"); // 로그 추가
         // 부모 창(header.jsp에 있는)의 closeFortuneCookieModal 함수를 호출해야 해요!
-        if (window.parent && typeof window.parent.closeFortuneCookieModal === 'function') {
-            window.parent.closeFortuneCookieModal();
+        if (typeof closeFortuneCookieModal === 'function') {
+            closeFortuneCookieModal();
         }
     });
 }

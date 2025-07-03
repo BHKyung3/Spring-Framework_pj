@@ -1,5 +1,4 @@
 // createTest.js (또는 원하는 이름의 .js 파일)
-
 let questionIndex = 1; // 질문 인덱스를 0으로 초기화
 let resultIndex = 1;   // 결과 인덱스를 0으로 초기화
 const answerIndices = {}; // 각 질문별 보기 인덱스를 관리하는 객체

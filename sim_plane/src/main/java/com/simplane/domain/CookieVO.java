@@ -10,7 +10,7 @@ import lombok.*;
 @AllArgsConstructor
 public class CookieVO {
 
-    private Long cookieId;
+    private Long cookieid;
     private String content;
 
 }

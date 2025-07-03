@@ -39,6 +39,7 @@
 		<intercept-url pattern="/checkUsername" access="permitAll()" /><!-- 중복확인체크 -->
 		<intercept-url pattern="/test/**" access="permitAll()" />
 		<intercept-url pattern="/fortune/**" access="permitAll()" />
+		<intercept-url pattern="/cookie/**" access="permitAll()" />
 		<intercept-url pattern="/replies/pages/**" access="permitAll()" />
 		<intercept-url pattern="/replies/new" access="isAuthenticated()" />
 		<intercept-url pattern="/replies/**" method="PUT" access="isAuthenticated()" />

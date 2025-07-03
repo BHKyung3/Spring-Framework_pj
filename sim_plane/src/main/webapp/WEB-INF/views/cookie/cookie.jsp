@@ -1,7 +1,8 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
 
 <style>
   /* 팝업창의 흰색 박스 (실제 내용물이 들어가는 부분) 스타일이에요. */
@@ -14,16 +15,14 @@
     border-radius: 10px; /* 모서리를 둥글게 만들어요. */
     text-align: center; /* 글자나 그림을 가운데 정렬 */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 그림자 효과를 줘서 입체감을 높여요. */
-    max-width: 500px; /* !!! 모달창 크기 키우고 싶다면 max-width, width를 여기서 조절 (예: 500px) !!! */
-    width: 90%;
+    max-width: 650px;
+    width: 80%;
     box-sizing: border-box;
-    /* z-index와 position은 부모 요소인 .popup-overlay (header.jsp)에 의해 관리되므로 여기서는 필수는 아님. */
-    /* 하지만 혹시 다른 요소와의 충돌이 있다면 추가 고려 가능. */
   }
 
   /* 포춘쿠키 그림의 스타일이에요. */
   .fortune-cookie-image {
-    width: 150px;
+    width: 500px;
     height: auto;
     cursor: pointer;
     margin-bottom: 20px;
@@ -33,11 +32,12 @@
 
   /* 명언이 표시될 부분의 스타일이에요. */
   .fortune-message {
-    font-size: 1.2em;
+    font-size: 1.4em;
     color: #333;
     min-height: 50px;
     display: flex;
     align-items: center;
+    font-family: 'Gowun Dodum', sans-serif;
     justify-content: center;
     line-height: 1.4;
   }
@@ -61,12 +61,9 @@
 </style>
 
 <div class="popup-content" id="fortuneCookieContent">
-  <img src="/resources/images/fortune_cookie.png" alt="포춘쿠키" class="fortune-cookie-image" id="cookieImageInModal">
-  <%-- ID는 충돌 방지를 위해 이전처럼 InModal 접미사를 유지하는 것이 더 안전합니다. --%>
+  <img src="/resources/images/fortune_cookie1.png" alt="포춘쿠키" class="fortune-cookie-image" id="cookieImageInModal">
 
   <p id="fortuneMessageInModal" class="fortune-message"></p>
 
   <button class="close-button" id="closeButtonInModal">닫기</button>
 </div>
-
-<script src="${pageContext.request.contextPath}/resources/js/cookie.js"></script>
