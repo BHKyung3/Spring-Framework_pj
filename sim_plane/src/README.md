@@ -1,7 +1,7 @@
 # Spring Framework Backend Portfolio
 ***
 ## 🎯 GitHub URL
-###
+### https://github.com/BHKyung3/Spring-Framework_pj
 ***
 ## 🎯 프로젝트 소개
 ### ✅ 기획 배경
@@ -34,8 +34,13 @@
 #### Apache Maven 2.5.1 <br> JSP
 ![Maven](https://img.shields.io/badge/Maven-C71A36?style=flat&logo=apachemaven&logoColor=white)
 ***
+## 🎯 ERD 구조
+![ERD](./erd_diagram.png)
+***
+## 🎯 맡은 역할
+***
 ## 🎯 구현 기능 및 설명
 ***
+## 🎯 어려웠던 점과 해결하면서 느낀점
+***
 ## 🎯 개선사항
-
-나의 역할 및 기여도 소감 및 배운점 어려웠던 점과 해결 과정 ERD 구조
