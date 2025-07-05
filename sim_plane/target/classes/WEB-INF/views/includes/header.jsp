@@ -58,6 +58,9 @@
                         <sec:authorize access="hasRole('ROLE_ADMIN')">
                             <li><a href="/test/createTest">테스트생성</a></li>
                         </sec:authorize>
+                        <sec:authorize access="hasRole('ROLE_ADMIN')">
+                            <li><a href="/memberList">회원 관리</a></li>
+                        </sec:authorize>
                     </ul>
                 </nav>
             </div>

@@ -1,8 +1,11 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+
 <%@ include file="../includes/header.jsp" %>
 <link rel="stylesheet" href="<c:url value='/resources/dist/css/main.css' />" />
+<link rel="stylesheet" href="<c:url value='/resources/dist/css/register.css' />" />
 
 <div class="container">
     <h2>문의하기</h2>
@@ -18,7 +21,8 @@
             <tr>
                 <th>작성자</th>
                 <td>
-                    <input type="text" name="writer" style="width: 100%;">
+                    <input type="text" name="writer" style="width: 100%;"
+                           value="<sec:authentication property='principal.username' />" readonly>
                 </td>
             </tr>
             <tr>

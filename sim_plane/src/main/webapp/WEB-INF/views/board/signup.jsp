@@ -4,9 +4,13 @@
 <%
     request.setAttribute("tab", "performance");
 %>
+<%@ include file="../includes/header.jsp" %>
+
+<link rel="stylesheet" href="<c:url value='/resources/dist/css/main.css' />" />
 <link rel="stylesheet" href="<c:url value='/resources/dist/css/signup.css' />" />
 
-<%@ include file="../includes/header.jsp" %>
+
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <!-- 회원가입 폼 -->

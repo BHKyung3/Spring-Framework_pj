@@ -33,7 +33,7 @@
                     <ul>
                         <!--로그인 하면 로그인, 회원가입 버튼 사라지고 로그아웃 버튼이 나오게-->
                         <sec:authorize access="!isAuthenticated()">
-                            <li><a href="<c:url value='/customlogin' />">로그인</a></li>
+                            <li><a href="<c:url value='/login' />">로그인</a></li>
                             <li>|</li>
                             <li><a href="<c:url value='/signup' />">회원가입</a></li>
                         </sec:authorize>
@@ -57,6 +57,9 @@
                         <li><a href="/board/list">문의게시판</a></li>
                         <sec:authorize access="hasRole('ROLE_ADMIN')">
                             <li><a href="/test/createTest">테스트생성</a></li>
+                        </sec:authorize>
+                        <sec:authorize access="hasRole('ROLE_ADMIN')">
+                            <li><a href="/memberList">회원 관리</a></li>
                         </sec:authorize>
                     </ul>
                 </nav>

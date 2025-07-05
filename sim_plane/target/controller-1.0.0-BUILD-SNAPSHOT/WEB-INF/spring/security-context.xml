@@ -19,7 +19,7 @@
 	</beans:bean>
 
 	<beans:bean id="bcryptPasswordEncoder"
-		  class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"></beans:bean>
+				class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"></beans:bean>
 
 
 	<!-- 모든 요청 인증 필요 -->

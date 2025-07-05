@@ -1,3 +1,6 @@
+.page-header {
+    text-align: center;
+}
 
 /* 게시판 패널 */
 .panel {
@@ -7,6 +10,8 @@
     border: none;
     margin-top: 24px;
     padding: 0 0 16px 0;
+    width: 1000px;
+    margin: 0 auto;
 }
 
 /* 패널 헤더 */
