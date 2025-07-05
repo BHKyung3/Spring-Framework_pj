@@ -35,7 +35,7 @@
 ![Maven](https://img.shields.io/badge/Maven-C71A36?style=flat&logo=apachemaven&logoColor=white)
 ***
 ## 🎯 ERD 구조
-![ERD](./erd_diagram.png)
+![ERD](erd_diagram.png)
 ***
 ## 🎯 맡은 역할
 ***
