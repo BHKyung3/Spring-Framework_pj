@@ -14,5 +14,6 @@ public interface MemberMapper {
 
     int insertAuth(AuthVO auth);
 
+
     List<AuthVO> readAuthByMemberid(int memberid);
 }

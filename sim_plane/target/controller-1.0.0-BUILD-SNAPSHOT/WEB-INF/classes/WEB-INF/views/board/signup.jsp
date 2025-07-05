@@ -4,6 +4,7 @@
 <%
     request.setAttribute("tab", "performance");
 %>
+<link rel="stylesheet" href="<c:url value='/resources/dist/css/main.css' />" />
 
 <%@ include file="../includes/header.jsp" %>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

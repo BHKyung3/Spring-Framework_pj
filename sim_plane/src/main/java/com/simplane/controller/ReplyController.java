@@ -9,7 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -21,7 +20,6 @@ public class ReplyController {
     private final ReplyService replyService;
 
     @PostMapping(value = "/new")
-    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<String> create(@RequestBody ReplyVO vo){ //@RequestBody -> json형식으로 받겠다
         log.info("ReplyVO : " + vo);
 
@@ -42,9 +40,9 @@ public class ReplyController {
                                                  @PathVariable("testid") Long testid,
                                                  @PathVariable("page") int page
     ){
-        log.info("getLlist.....");
-
         Criteria cri = new Criteria(page, 10);
+
+        log.info("getLlist.....");
 
         return new ResponseEntity<>(replyService.getListPage(cri, testid), HttpStatus.OK);
     }
@@ -59,7 +57,7 @@ public class ReplyController {
     }
 
     // 댓글 데이터 수정
-    @PreAuthorize("principal.username == #vo.replyer")
+    //@PreAuthorize("principal.username == #vo.replyer")
     @RequestMapping(method = {RequestMethod.PUT, RequestMethod.PATCH},
             value = "/{replyid}", consumes = "application/json", produces = {MediaType.TEXT_PLAIN_VALUE})
     public ResponseEntity<String> modify(@RequestBody ReplyVO vo, @PathVariable("replyid") Long replyid){
@@ -71,9 +69,8 @@ public class ReplyController {
                 : new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @PreAuthorize("principal.username == #vo.replyer")
     @DeleteMapping(value = "/{replyid}", produces = MediaType.TEXT_PLAIN_VALUE)
-    public ResponseEntity<String> remove(@RequestBody ReplyVO vo, @PathVariable("replyid")Long replyid){
+    public ResponseEntity<String> remove(/*@RequestBody ReplyVO vo, */@PathVariable("replyid")Long replyid){
         log.info("remove : " + replyid);
 
         //replyid로 댓글 삭제, 댓글삭제시 replyid만 필요함

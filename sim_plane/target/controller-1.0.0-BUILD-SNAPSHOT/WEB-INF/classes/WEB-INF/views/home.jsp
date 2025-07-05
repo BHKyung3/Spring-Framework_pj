@@ -3,29 +3,37 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page session="false" %>
 <%@ include file="./includes/header.jsp" %>
+<link rel="stylesheet" href="<c:url value='/resources/dist/css/main.css' />" />
 
-<div id="slider"><img src="img01/배너.JPG"></div>
-<h4>~BEST 굿즈를 한번에 만나보세요~</h4>
 
-<section>
-	<article>
-		<h3>짱구는못말려</h3>
-		<a href="#"></a>
-	</article>
-	<article>
-		<h3>명탐정코난</h3>
-		<a href="#"></a>
-	</article>
-	<article>
-		<h3>약사의 혼잣말</h3>
-		<a href="#"></a>
-	</article>
-	</article>
-	<article>
-		<h3>나혼자만 레벨업업</h3>
-		<a href="#"></a>
-	</article>
-</section>
+<!-- MAIN -->
+<main>
+	<div id="slider">
+		<h1>금주의 추천 테스트</h1>
+		<img src="/resources/images/animals.png" alt="슬라이드 이미지">
+	</div>
+
+	<h3>~BEST 굿즈를 한 번에 만나보세요~</h3>
+
+	<section>
+		<article>
+			<h3>포춘쿠키</h3>
+			<a href="#"><img src="/resources/images/animals.png"></a>
+		</article>
+		<article>
+			<h3>당신의 이상적인 휴가 스타일은?</h3>
+			<a href="#"><img src="/resources/images/animals.png"></a>
+		</article>
+		<article>
+			<h3>올해의 운세</h3>
+			<a href="#"><img src="/resources/images/animals.png"></a>
+		</article>
+		<article>
+			<h3>당신은 어떤 동물 유형일까? 2탄</h3>
+			<a href="#"><img src="/resources/images/animals.png"></a>
+		</article>
+	</section>
+</main>
 
 
 <%@ include file="./includes/footer.jsp" %>

@@ -7,6 +7,7 @@ public interface ResultMapper {
 
     ResultVO readResultByScore(@Param("testid") int testid, @Param("totalScore") int totalscore);
 
+
     // 결과 삽입
     void insertResult(ResultVO result);
 

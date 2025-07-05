@@ -14,8 +14,8 @@
 
     <select id="existsQuestionAfter" resultType="boolean">
         select exists(
-            select 1 from sim_question
-            where testid = #{testid} and q_index > #{q_index}
+        select 1 from sim_question
+        where testid = #{testid} and q_index > #{q_index}
         )
     </select>
 

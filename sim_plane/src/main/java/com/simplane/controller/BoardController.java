@@ -2,12 +2,12 @@ package com.simplane.controller;
 
 import com.simplane.domain.BoardVO;
 import com.simplane.domain.Criteria;
+import com.simplane.domain.ImgPathVO;
 import com.simplane.domain.PageDTO;
 import com.simplane.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -34,6 +34,8 @@ public class BoardController {
         int total = service.getTotal(cri);
 
         model.addAttribute("pageMaker", new PageDTO(cri, total));
+
+        log.info("### 전체 게시글 수: " + total);
     }
     
     //단 건 읽어오기
@@ -43,11 +45,11 @@ public class BoardController {
 
         model.addAttribute("board", service.get(boardid));
         model.addAttribute("cri", cri);
+        model.addAttribute("images", service.getImageList(boardid));
     }
 
     // 데이터 수정
     @PostMapping("/modify")
-    @PreAuthorize("principal.username == #board.writer")
     public String modify(BoardVO board, @ModelAttribute("cri") Criteria cri, RedirectAttributes rttr) {
         log.info("modify.....2");
         log.info("service is null? " + (service == null));
@@ -71,18 +73,29 @@ public class BoardController {
     }
 
     @PostMapping("/register")
-    @PreAuthorize("isAuthenticated()")
-    public String register(BoardVO boardVO, RedirectAttributes rttr) {
+    public String register(BoardVO boardVO,
+                           @RequestParam(value = "imagePaths", required = false) List<String> imagePaths,
+                           RedirectAttributes rttr) {
         log.info("register.....");
         service.register(boardVO);
+        log.info("imagePaths: " + imagePaths);
+
+        if(imagePaths != null){
+            for(String path : imagePaths){
+                log.info(">>> 이미지 저장 전 path: " + path); // ← 여기에 로그
+                ImgPathVO img = new ImgPathVO(null, boardVO.getBoardid(), path);
+                service.createImg(img);
+            }
+        }
+
+
         rttr.addFlashAttribute("result", boardVO.getBoardid());
         return "redirect:/board/list";
     }
 
     @PostMapping("/remove")
-    @PreAuthorize("principal.username == #writer")
     public String remove(@RequestParam("boardid") Long boardid, @ModelAttribute("cri") Criteria cri ,
-                         RedirectAttributes rttr, String writer) {
+                         RedirectAttributes rttr) {
         log.info("remove..." + boardid);
 //        log.info("remove...writer..." + writer);
 
@@ -93,7 +106,6 @@ public class BoardController {
     }
 
     @GetMapping("/register")
-    @PreAuthorize("isAuthenticated()")
     public void register(){
     }
 
