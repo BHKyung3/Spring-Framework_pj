@@ -38,7 +38,7 @@
       <c:forEach var="img" items="${images}">
         <div class="col-md-3 mb-3">
           <img src="<c:url value='/display?fileName=${img.imagePath}' />"
-               alt="첨부 이미지" class="img-fluid img-thumbnail" />
+               alt="첨부 이미지" class="board-image" />
         </div>
       </c:forEach>
     </div>

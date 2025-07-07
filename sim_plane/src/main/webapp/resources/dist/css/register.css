@@ -83,6 +83,15 @@ input[type="file"] {
     background-color: #ddd;
 }
 
+/* register.css 또는 main.css에 추가 */
+.board-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+    display: block;
+    margin: 16px auto;
+}
+
 /* 이미지 업로드 미리보기 */
 .uploadResult ul {
     list-style: none;
