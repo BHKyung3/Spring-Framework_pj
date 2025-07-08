@@ -157,7 +157,7 @@ XML 설정에서는 URL로 권한을 제한하고, JSP에서는 로그인한 사
 #### ✅ [심리테스트 목록 화면]
 ![screen](./docs/testlist.JPG)
 #### ✅ [테스트 결과 화면]
-![screen](./docs/test.JPG)
+![screen](docs/test.JPG)
 #### ✅ [사용 코드 및 설명]
 ![screen](./docs/testcode2.JPG)
 - 사용자는 /test/question 요청을 통해 단계별 질문과 답변을 비동기 방식으로 받아 응답하며, 선택한 보기의 점수는 세션에 누적됩니다.
